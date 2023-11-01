@@ -59,7 +59,7 @@ export async function POST(request: Request){
     try
     {
 
-        return NextResponse.json({"fail":false, username: user.username, email:user.email, performance: user.recentFiveLifts}); 
+        return NextResponse.json({"fail":false,msg:"", username: user.username, email:user.email, performance: user.recentFiveLifts}); 
     }
     catch(e)
     {

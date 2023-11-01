@@ -16,19 +16,20 @@ type accountData = {
 export async function POST(request: Request){
 
 
+    console.log("data rcieved!")
     const {username,password,email}: Partial<accountData> = await request.json();
     
 
     if(!username || !password ||!email)
     {
         
-        return NextResponse.json({"fail":true, msg:"Missing Data"}); 
+        return NextResponse.json({"fail":true, msg:"Missing Data",token:""}); 
     }
     //email format checker
     if(!EmailValidator.validate(email))
     {
 
-        return NextResponse.json({"fail":true, msg:"Email Formatted Wrong"}); 
+        return NextResponse.json({"fail":true, msg:"Email Formatted Wrong",token:""}); 
     }
     
     const user = await prisma.user.findUnique
@@ -40,7 +41,7 @@ export async function POST(request: Request){
 
     if(user)
     {
-        return NextResponse.json({"fail":true, msg:"You need a unique email"}); 
+        return NextResponse.json({"fail":true, msg:"You need a unique email",token:""}); 
     }
 
     try
@@ -61,12 +62,12 @@ export async function POST(request: Request){
         
        
 
-        return NextResponse.json({"fail":false, token:token}); 
+        return NextResponse.json({"fail":false, msg:"", token:token}); 
     }
     catch(e)
     {
         console.log(e)
-        return NextResponse.json({"fail":true, msg: "something went wrong"}); 
+        return NextResponse.json({"fail":true, msg: "something went wrong", token:""}); 
     }
 
 }
